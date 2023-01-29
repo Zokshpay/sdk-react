@@ -1,23 +1,33 @@
 {
-  "name": "@zokshpay/sdk-react",
-  "version": "1.0.0",
+  "name": "@zokshpay/sdk-browser",
+  "version": "0.1.0",
   "description": "Wrapper on top of generic zokshpay embed.js to enable easy integration",
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zokshpay/sdk-react.git"
+    "url": "https://github.com/Zokshpay/sdk-browser.git"
   },
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc"
+    "prepublish": "npm run tsc",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'src/**/*.test.ts'",
+    "tsc": "tsc -p tsconfig.json"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "crypto-payments",
+    "crypto",
+    "moopay",
+    "zoksh"
+  ],
+  "author": "Kamaljeet Singh <kamal@zoksh.com>",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zokshpay/sdk-browser/issues"
+  },
+  "homepage": "https://github.com/Zokshpay/sdk-browser#readme",
   "devDependencies": {
     "typescript": "^4.9.4"
-  },
-  "publishConfig": {
-    "registry": "http://nexus.dsv.myhost/nexus/repository/npmjs"
   }
 }
