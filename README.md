@@ -1,3 +1,3 @@
-# sdk-react
+# sdk-browser
 
-React wrapper on embed.js for easy integration.
+Browser wrapper on embed.js for easy integration.
