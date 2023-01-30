@@ -1,19 +1,18 @@
 {
-  "name": "@zokshpay/sdk-browser",
+  "name": "@zokshpay/sdk-react",
   "version": "0.1.1",
   "description": "Wrapper on top of generic zokshpay embed.js to enable easy integration",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zokshpay/sdk-browser.git"
+    "url": "https://github.com/Zokshpay/sdk-react.git"
   },
   "files": [
     "dist/"
   ],
   "scripts": {
-    "prepublish": "npm run tsc",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'src/**/*.test.ts'",
-    "tsc": "tsc -p tsconfig.json"
+    "start": "webpack serve --port 1337",
+    "build": "NODE_ENV=production webpack"
   },
   "keywords": [
     "crypto-payments",
@@ -21,13 +20,27 @@
     "moopay",
     "zoksh"
   ],
-  "author": "Kamaljeet Singh <kamal@zoksh.com>",
+  "author": "Ashish Rana <ashish@zoksh.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Zokshpay/sdk-browser/issues"
+    "url": "https://github.com/Zokshpay/sdk-react/issues"
   },
-  "homepage": "https://github.com/Zokshpay/sdk-browser#readme",
+  "homepage": "https://github.com/Zokshpay/sdk-react#readme",
   "devDependencies": {
-    "typescript": "^4.9.4"
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.2",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "usehooks-ts": "^2.9.1"
   }
 }
