@@ -1,43 +1,27 @@
+import { useCallback, useEffect } from 'react';
 import { useZoksh } from './useZoksh';
 
 export const Example = () => {
-  const { status, contextValue } = useZoksh({
-    configurations: {
-      order: 'orderId',
-      mode: 'headless',
-      environment: 'test', // test , prod
-    },
-    eventHandlers: [
-      {
-        event: 'payment-init',
-        handler: (ev) => {
-          console.log('Got payment init');
-          console.log(ev);
-        },
-      },
-      {
-        event: 'payment-validated',
-        handler: (ev) => {
-          console.log('Got payment validated');
-          console.log(ev);
-        },
-      },
-      {
-        event: 'payment-failed',
-        handler: (ev) => {
-          console.log('Got failed');
-          console.log(ev);
-        },
-      },
-      {
-        event: 'payment-processed',
-        handler: (ev) => {
-          console.log('Got processed');
-          console.log(ev);
-        },
-      },
-    ],
+  const { status, addEventHandler, initOrder } = useZoksh({
+    environment: 'test',
   });
+
+  const initHandler = useCallback(() => {
+    console.log('payment init');
+  }, [status]);
+
+  const validatedHandler = useCallback(() => {
+    console.log('payment validated');
+  }, [status]);
+
+  useEffect(() => {
+    if (status === 'ready') {
+      addEventHandler({ event: 'payment-init', handler: initHandler });
+      addEventHandler({ event: 'payment-validated', handler: validatedHandler });
+
+      initOrder('821uosadfnq230aa822nc');
+    }
+  }, [status, addEventHandler]);
 
   return (
     <>

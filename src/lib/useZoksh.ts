@@ -1,18 +1,20 @@
 import useScript from './useScript';
-import React, { useEffect, useState } from 'react';
-import { ZokshSDKProps, ZokshPayEventHandler, ZokshPayConfig } from './types';
+import { useCallback, useState } from 'react';
+import { ZokshPayEventHandler, ZokshPayConfig } from './types';
 
 declare const Zoksh: any;
 
-export function useZoksh({ configurations, eventHandlers }: ZokshSDKProps) {
-  const status = useScript(`https://pay.testnet.zoksh.com/public/embed.js`, { removeOnUnmount: false });
-  const [contextValue, setContextValue] = useState<any>();
+export function useZoksh(configuration: ZokshPayConfig) {
+  const status = useScript(zokshURL(configuration.environment), { removeOnUnmount: false });
+  const [eventHandlers, setEventHandlers] = useState<any>({});
 
-  useEffect(() => {
-    if (typeof Zoksh !== 'undefined') {
-      try {
+  const initOrder = useCallback(
+    (orderId: string) => {
+      if (status === 'ready' && typeof Zoksh !== 'undefined') {
         const instance = new Zoksh({
-          ...configurations,
+          ...configuration,
+          mode: 'headless',
+          orderId,
         });
 
         eventHandlers.forEach((event: ZokshPayEventHandler) => {
@@ -25,28 +27,28 @@ export function useZoksh({ configurations, eventHandlers }: ZokshSDKProps) {
 
         instance.init();
 
-        setContextValue(instance);
-      } catch (e) {
-        console.log(e);
+        return instance;
       }
-    }
-  }, [status]);
+    },
+    [status]
+  );
 
-  return { status, contextValue };
+  const addEventHandler = useCallback(({ event, handler }: ZokshPayEventHandler) => {
+    setEventHandlers({ ...eventHandlers, [event]: { event, handler } });
+  }, []);
+
+  return { status, addEventHandler, initOrder };
 }
 
-// environment?: 'test' | 'local' | 'prod' | 'stage' | 'sandbox';
-function zokshURL(environment: ZokshPayConfig['environment']) {
+function zokshURL(environment: ZokshPayConfig['environment'] = 'test') {
   switch (environment) {
-    case 'local':
-      return 'https://pay.moopay.local';
     case 'prod':
-      return 'https://pay.zoksh.com';
+      return 'https://pay.zoksh.com/public/embed.js';
     case 'test':
     case 'stage':
     case 'sandbox':
-      return 'https://pay.testnet.zoksh.com';
+    case 'local':
     default:
-      return 'https://pay.testnet.zoksh.com';
+      return `https://pay.testnet.zoksh.com/public/embed.js`;
   }
 }

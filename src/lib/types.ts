@@ -1,4 +1,4 @@
-export type ZokshPayEmbedType = 'inset' | 'button' | 'headless' | 'standalone' | 'ramp';
+export type ZokshPayEmbedType = 'headless';
 
 export interface ThemeOptions {
   backgroundColor?: string;
@@ -30,11 +30,6 @@ export interface ZokshPayConfig {
   label?: string;
 
   /*
-  Product ID when making payment against product on MooPay
-  */
-  product?: string;
-
-  /*
   API KEY of the client
   */
   apiKey?: string;
@@ -59,20 +54,17 @@ export interface ZokshPayConfig {
   inset: renders the payment form directly, used in payment pages.
   headless: doesn't render any UI, merchant has to explicitly call init with mergable options
   */
-  mode: ZokshPayEmbedType;
+  mode?: ZokshPayEmbedType;
 
   params?: Record<string, string>;
-  showNotifications?: boolean;
 
-  theme?: ThemeOptions;
-
-  rampConfig?: RampConfig;
+  // showNotifications?: boolean;
 }
 
 export type ZokshPayEvent =
   | 'cancelled'
-  | 'expiry-timer'
-  | 'callback-urls'
+  // | 'expiry-timer'
+  // | 'callback-urls'
   | 'clear-expiry'
   | 'expired-session'
   | 'payment-init'
@@ -83,8 +75,8 @@ export type ZokshPayEvent =
   | 'payment-failed'
   | 'payment-cancelled'
   | 'modal-opened'
-  | 'modal-closed'
-  | 'redirect';
+  | 'modal-closed';
+// | 'redirect';
 
 export interface ZokshPayEventHandler {
   event: ZokshPayEvent;
