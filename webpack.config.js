@@ -5,7 +5,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: prod ? 'production' : 'development',
-  entry: './src/index.tsx',
+  entry: {
+    example: './src/index.tsx',
+    index: './src/lib/sdk-react.tsx',
+  },
   output: {
     path: __dirname + '/dist/',
   },
@@ -23,7 +26,7 @@ module.exports = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
-    ]
+    ],
   },
   devtool: prod ? undefined : 'source-map',
   plugins: [
