@@ -94,4 +94,5 @@ export interface ZokshPayEventHandler {
 export interface ZokshSDKProps {
   configurations: ZokshPayConfig;
   eventHandlers: ZokshPayEventHandler[];
+  children?: React.ReactElement;
 }
