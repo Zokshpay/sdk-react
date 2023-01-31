@@ -1,8 +1,6 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
 import { useZoksh } from './useZoksh';
 
-const App = () => {
+export const Example = () => {
   const { status, contextValue } = useZoksh({
     configurations: {
       order: 'orderId',
@@ -48,7 +46,3 @@ const App = () => {
     </>
   );
 };
-
-const container = document.getElementById('app-root')!;
-const root = createRoot(container);
-root.render(<App />);
