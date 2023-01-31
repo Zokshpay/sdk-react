@@ -1,6 +1,6 @@
 # sdk-react
 
-Browser wrapper on embed.js for easy integration.
+React wrapper on latest zoksh embed.js for easy, secure and up-to-date integration.
 
 ## Usage example
 
