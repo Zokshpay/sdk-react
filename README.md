@@ -10,7 +10,7 @@ import { useZoksh } from './useZoksh';
 export const Example = () => {
   const { status, contextValue } = useZoksh({
     configurations: {
-      order: 'orderId',
+      order: '<YOUR ORDER ID HERE>',
       mode: 'headless',
       environment: 'test', // test , prod
     },
