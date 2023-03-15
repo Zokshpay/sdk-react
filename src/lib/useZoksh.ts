@@ -9,12 +9,12 @@ export function useZoksh(configuration: ZokshPayConfig) {
   const [eventHandlers, setEventHandlers] = useState<any>({});
 
   const initOrder = useCallback(
-    (orderId: string) => {
+    (order: string) => {
       if (status === 'ready' && typeof Zoksh !== 'undefined') {
         const instance = new Zoksh({
           ...configuration,
           mode: 'headless',
-          orderId,
+          order,
         });
 
         eventHandlers.forEach((event: ZokshPayEventHandler) => {
