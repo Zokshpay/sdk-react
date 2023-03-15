@@ -17,9 +17,12 @@ export function useZoksh(configuration: ZokshPayConfig) {
           order,
         });
 
-        eventHandlers.forEach((event: ZokshPayEventHandler) => {
+        Object.keys(eventHandlers).forEach((event: string) => {
           try {
-            instance.subscribe(event.event, event.handler);
+            const evnt = eventHandlers[event] as ZokshPayEventHandler;
+            if (evnt) {
+              instance.subscribe(evnt.event, evnt.handler);
+            }
           } catch (e) {
             console.log(e);
           }
@@ -33,9 +36,12 @@ export function useZoksh(configuration: ZokshPayConfig) {
     [status]
   );
 
-  const addEventHandler = useCallback(({ event, handler }: ZokshPayEventHandler) => {
-    setEventHandlers({ ...eventHandlers, [event]: { event, handler } });
-  }, []);
+  const addEventHandler = useCallback(
+    ({ event, handler }: ZokshPayEventHandler) => {
+      setEventHandlers({ ...eventHandlers, [event]: { event, handler } });
+    },
+    [eventHandlers]
+  );
 
   return { status, addEventHandler, initOrder };
 }
